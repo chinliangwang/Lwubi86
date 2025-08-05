@@ -1,23 +1,25 @@
 # =========================
 # OS & Editor
 # =========================
-.DS_Store            # macOS系统文件
-Thumbs.db            # Windows缩略图缓存
-*.swp                # Vim临时文件
-.vscode/             # VSCode配置目录
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
 
 # =========================
 # Rime 输入法相关
 # =========================
-build/               # Rime编译缓存目录
-*.userdb             # 用户词库（可选，如果不想共享个人词库）
-*.log                # 可能的日志文件
+build/
+installation.yaml
+user.yaml
+*.userdb
+*.log
 
 # =========================
 # 项目结构相关
 # =========================
-exports/             # 导出文件，不纳入版本控制
-history/             # 历史版本存档，不纳入版本控制
+exports/
+history/
 
 # =========================
 # 其他临时文件
