@@ -4,3 +4,9 @@ patch:
     max_code_length: 4
     auto_select: true        # 四码唯一自动上屏
     auto_clear: max_length   # 空码自动清空
+
+  # 覆写 translator 的部分属性而不是整体替换
+  "translator/enable_sentence": false        # 关闭自动造句
+  "translator/enable_encoder": false         # 关闭动态造词
+  "translator/encode_commit_history": false  # 不记录上屏历史
+
