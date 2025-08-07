@@ -21,3 +21,7 @@ patch:
       Control_R: noop
       Caps_Lock: clear         # Caps Lock 清空输入
       Eisu_toggle: clear       # 日文键盘切换键清空输入
+  
+  # 回车清空编码
+  "key_binder/bindings":
+    - { when: composing, accept: Return, send: Escape }
