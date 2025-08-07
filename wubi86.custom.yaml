@@ -10,3 +10,14 @@ patch:
   "translator/enable_encoder": false         # 关闭动态造词
   "translator/encode_commit_history": false  # 不记录上屏历史
 
+  # 左 Shift 临时切换英文功能
+  # 使用 ascii_composer 的 switch_key 配置
+  ascii_composer:
+    good_old_caps_lock: true
+    switch_key:
+      Shift_L: inline_ascii    # 左 Shift 临时切换到英文输入
+      Shift_R: noop            # 右 Shift 保持默认行为
+      Control_L: noop
+      Control_R: noop
+      Caps_Lock: clear         # Caps Lock 清空输入
+      Eisu_toggle: clear       # 日文键盘切换键清空输入
