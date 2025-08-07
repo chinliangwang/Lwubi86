@@ -22,6 +22,8 @@ patch:
       Caps_Lock: clear         # Caps Lock 清空输入
       Eisu_toggle: clear       # 日文键盘切换键清空输入
   
-  # 回车清空编码
+  # 回车清空编码，分号选第二候选字，单引号选第三候选字
   "key_binder/bindings":
-    - { when: composing, accept: Return, send: Escape }
+    - { when: composing, accept: Return, send: Escape }   # 回车清空编码
+    - { when: has_menu, accept: semicolon, send: 2 }      # 分号键选第二候选字
+    - { when: has_menu, accept: apostrophe, send: 3 }     # 单引号键选第三候选字
