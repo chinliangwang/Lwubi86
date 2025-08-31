@@ -1,4 +1,125 @@
 patch:
+  switches:							# 覆写 switches 配置，增加 ascii_punct 开关的 reset 属性
+    - name: ascii_mode
+      reset: 0
+      states: [ 中, 英 ]
+    - name: full_shape
+      reset: 0
+      states: [ 半, 全 ]
+    - name: ascii_punct
+      reset: 0						# 默认标点符号为中文标点我现在是
+      states: [ 。，, ．， ]
+  
+   # 标点符号配置 - 完全覆盖默认配置
+  punctuator:
+    # 英文标点配置（ascii_punct: true 时使用）
+    ascii_punct:
+      '~': '~'
+      '!': '!'
+      '@': '@'
+      '#': '#'
+      '$': '$'
+      '%': '%'
+      '^': '^'
+      '&': '&'
+      '*': '*'
+      '(': '('
+      ')': ')'
+      '-': '-'
+      '_': '_'
+      '+': '+'
+      '=': '='
+      '[': '['
+      ']': ']'
+      '{': '{'
+      '}': '}'
+      '|': '|'
+      ';': ';'
+      ':': ':'
+      "'": "'"
+      '"': '"'
+      ',': ','
+      '.': '.'
+      '/': '/'
+      '<': '<'
+      '>': '>'
+      '?': '?'
+      '`': '`'
+      ' ': ' '
+    
+    # 中文标点配置（ascii_punct: false 时使用）
+    # 半角中文标点
+    half_shape:
+      '~': '~'
+      '!': '！'
+      '@': '@'
+      '#': '#'
+      '$': '￥'
+      '%': '%'
+      '^': '……'
+      '&': '&'
+      '*': '*'
+      '(': '（'
+      ')': '）'
+      '-': '－'
+      '_': '——'
+      '+': '＋'
+      '=': '＝'
+      '[': '【'
+      ']': '】'
+      '{': '「'
+      '}': '」'
+      '|': '｜'
+      '\': '、'
+      ';': '；'
+      ':': '：'
+      "'": { pair: ["‘","’"] }
+      '"': { pair: ["“","”"] }
+      ',': '，'
+      '.': '。'
+      '/': '/'
+      '<': '《'
+      '>': '》'
+      '?': '？'
+      '`': '·'
+      ' ': ' '
+    
+    # 全角中文标点
+    full_shape:
+      '~': '～'
+      '!': '！'
+      '@': '＠'
+      '#': '＃'
+      '$': '￥'
+      '%': '％'
+      '^': '……'
+      '&': '＆'
+      '*': '＊'
+      '(': '（'
+      ')': '）'
+      '-': '－'
+      '_': '——'
+      '+': '＋'
+      '=': '＝'
+      '[': '【'
+      ']': '】'
+      '{': '「'
+      '}': '」'
+      '|': '｜'
+      '\': '、'
+      ';': '；'
+      ':': '：'
+      "'": { pair: ["‘","’"] }
+      '"': { pair: ["“","”"] }
+      ',': '，'
+      '.': '。'
+      '/': '／'
+      '<': '《'
+      '>': '》'
+      '?': '？'
+      '`': '·'
+      ' ': '　' 
+  
   # 基础输入配置
   speller:
     max_code_length: 4
@@ -10,20 +131,23 @@ patch:
   "translator/enable_encoder": false         # 关闭动态造词
   "translator/encode_commit_history": false  # 不记录上屏历史
 
-  # 左 Shift 临时切换英文功能
+  # 左 Shift 临时切换英文功能 https://gist.github.com/lotem/2981316
   # 使用 ascii_composer 的 switch_key 配置
   ascii_composer:
     good_old_caps_lock: true
     switch_key:
       Shift_L: inline_ascii    # 左 Shift 临时切换到英文输入
-      Shift_R: noop            # 右 Shift 保持默认行为
+      Shift_R: noop
       Control_L: noop
       Control_R: noop
       Caps_Lock: clear         # Caps Lock 清空输入
       Eisu_toggle: clear       # 日文键盘切换键清空输入
   
   # 回车清空编码，分号选第二候选字，单引号选第三候选字
-  "key_binder/bindings":
+  "key_binder/bindings/+":
     - { when: composing, accept: Return, send: Escape }   # 回车清空编码
     - { when: has_menu, accept: semicolon, send: 2 }      # 分号键选第二候选字
     - { when: has_menu, accept: apostrophe, send: 3 }     # 单引号键选第三候选字
+    - { when: always, accept: "Shift+space", toggle: full_shape }
+    - { when: always, accept: "Control+period", toggle: ascii_punct }
+
