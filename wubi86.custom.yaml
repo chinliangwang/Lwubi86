@@ -131,6 +131,8 @@ patch:
   "translator/enable_encoder": false         # 关闭动态造词
   "translator/encode_commit_history": false  # 不记录上屏历史
   "translator/enable_user_dict": false   # 禁用用户词典
+  "translator/enable_charset_filter": false   # 禁用字符集过滤
+  "translator/enable_completion": false   # 禁用自动补全
 
   # 左 Shift 临时切换英文功能 https://gist.github.com/lotem/2981316
   # 使用 ascii_composer 的 switch_key 配置
