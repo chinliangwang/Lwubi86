@@ -6,8 +6,11 @@ patch:
     - name: full_shape
       reset: 0
       states: [ 半, 全 ]
+    - name: extended_charset
+      reset: 0
+      states: [ 常, 扩 ]
     - name: ascii_punct
-      reset: 0						# 默认标点符号为中文标点我现在是
+      reset: 0						# 默认标点符号为中文标点
       states: [ 。，, ．， ]
   
    # 标点符号配置 - 完全覆盖默认配置
@@ -154,3 +157,7 @@ patch:
     - { when: always, accept: "Shift+space", toggle: full_shape }
     - { when: always, accept: "Control+period", toggle: ascii_punct }
 
+  "recognizer/patterns/+":  # 一些常见的英文组合，当正则匹配到这些时，都不会生成候选词，而只输入英文
+      email: "^[-_.0-9A-Za-z]+@.*$"
+      uppercase: "[A-Z][-_+.'0-9A-Za-z]*$"
+      url: "^(www[.]|https?:|ftp[.:]|mailto:|file:|localhost).*$|^[a-z]+[.].+$"
