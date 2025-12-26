@@ -5,6 +5,7 @@
 Thumbs.db
 *.swp
 .vscode/
+.cursor/
 
 # =========================
 # Rime 输入法相关
