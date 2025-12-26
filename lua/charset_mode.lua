@@ -42,22 +42,18 @@ function M.init(env)
   local base = (rime_api and rime_api.get_user_data_dir()) or os.getenv("RIME") or os.getenv("HOME") or ""
   -- 路径来自 schema 配置
   local gb2312_rel = cfg:get_string("charset/files/gb2312") or "lua/charset/gb2312.txt"
-  local gbk_rel    = cfg:get_string("charset/files/gbk")    or "lua/charset/gbk.txt"
   env.gb2312_path  = join(base, gb2312_rel)
-  env.gbk_path     = join(base, gbk_rel)
   env.gb2312_map   = load_charset(env.gb2312_path) or {}
-  env.gbk_map      = load_charset(env.gbk_path)    or {}
 
-  -- 失败放行保护：若两表都是空，记录标志，后续直接放行
-  env.fallback_pass = (next(env.gb2312_map) == nil and next(env.gbk_map) == nil)
+  -- 失败放行保护：若表为空，记录标志，后续直接放行
+  env.fallback_pass = (next(env.gb2312_map) == nil)
 end
 
 function M.func(input, env)
   local ctx = env.engine.context
 
-  -- 读取开关（兼容大小写 & extended_charset）
+  -- 读取开关（兼容大小写）
   local use_gb2312 = ctx:get_option("GB2312") or ctx:get_option("gb2312")
-  local use_gbk    = ctx:get_option("GBK")    or ctx:get_option("gbk") or ctx:get_option("extended_charset")
 
   -- 失败放行：避免“全被拦”导致打不出字
   if env.fallback_pass then
@@ -65,13 +61,8 @@ function M.func(input, env)
     return
   end
 
-  -- 选择集合（优先 GB2312，其次 GBK；都不选=全集）
-  local set = nil
-  if use_gb2312 then
-    set = env.gb2312_map
-  elseif use_gbk then
-    set = env.gbk_map
-  end
+  -- 选择集合（GB2312 开=GB2312字符集，关=全集）
+  local set = use_gb2312 and env.gb2312_map or nil
 
   for cand in input:iter() do
     if not set then

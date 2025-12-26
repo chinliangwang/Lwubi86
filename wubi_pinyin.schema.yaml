@@ -19,8 +19,9 @@ switches:
     states: [ 中文, 西文 ]
   - name: full_shape
     states: [ 半角, 全角 ]
-  - name: extended_charset
-    states: [ 常用, 增廣 ]
+  - name: GB2312
+    reset: 1
+    states: [ 关, 常用 ]
   - name: ascii_punct
     states: [ 。，, ．， ]
 

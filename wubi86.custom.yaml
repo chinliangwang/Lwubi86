@@ -1,5 +1,5 @@
 patch:
-  switches:							# 覆写 switches 配置，增加 ascii_punct 开关的 reset 属性
+  switches:								# 覆写 switches 配置，增加 ascii_punct 开关的 reset 属性
     - name: ascii_mode
       reset: 0
       states: [ 中, 英 ]
@@ -9,11 +9,8 @@ patch:
     - name: GB2312
       reset: 1
       states: [关, 常用]
-    - name: GBK
-      reset: 0
-      states: [关, GBK]
     - name: ascii_punct
-      reset: 0						# 默认标点符号为中文标点
+      reset: 0					# 默认标点符号为中文标点
       states: [ 。，, ．， ]
   
    # 标点符号配置 - 完全覆盖默认配置
@@ -172,4 +169,3 @@ patch:
   # 告诉 Lua 字表相对路径（相对于 Rime 用户目录）
   charset/files:
     gb2312: lua/charset/gb2312.txt
-    gbk:    lua/charset/gbk.txt
