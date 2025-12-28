@@ -45,6 +45,7 @@ engine:
   translators:
     - punct_translator
     - reverse_lookup_translator
+    - "lua_translator@date_translator"
     - table_translator
 
 speller:

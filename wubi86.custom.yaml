@@ -1,19 +1,26 @@
 patch:
-  switches:								# 覆写 switches 配置，增加 ascii_punct 开关的 reset 属性
+  switches:  # 覆写 switches 配置：中英 / 全半角 / 字符集范围 / 中西标点
     - name: ascii_mode
       reset: 0
-      states: [ 中, 英 ]
+      states: [ "中", "英" ]
+
     - name: full_shape
       reset: 0
-      states: [ 半, 全 ]
+      states: [ "半", "全" ]
+
+    # 默认开启 GB2312 范围（常用字）过滤
+    # reset=1 => 默认显示 states[1]（"常"）
     - name: GB2312
       reset: 1
-      states: [关, 常用]
+      states: [ "全", "常" ]
+
+    # ascii_punct=0 => 中文标点映射；ascii_punct=1 => 西文(ASCII)标点直出
+    # 注意：states 里含有逗号等分隔符，必须加引号，否则 YAML 可能解析错误
     - name: ascii_punct
-      reset: 0					# 默认标点符号为中文标点
-      states: [ 。，, ．， ]
+      reset: 0
+      states: [ "。，", "．，" ]
   
-   # 标点符号配置 - 完全覆盖默认配置
+  # 标点符号配置 - 完全覆盖默认配置
   punctuator:
     # 英文标点配置（ascii_punct: true 时使用）
     ascii_punct:
@@ -44,11 +51,11 @@ patch:
       ',': ','
       '.': '.'
       '/': '/'
+      '\': '\'
       '<': '<'
       '>': '>'
       '?': '?'
       '`': '`'
-      ' ': ' '
     
     # 中文标点配置（ascii_punct: false 时使用）
     # 半角中文标点
@@ -64,15 +71,15 @@ patch:
       '*': '*'
       '(': '（'
       ')': '）'
-      '-': '－'
+      '-': '-'
       '_': '——'
-      '+': '＋'
-      '=': '＝'
+      '+': '+'
+      '=': '='
       '[': '【'
       ']': '】'
       '{': '「'
       '}': '」'
-      '|': '｜'
+      '|': '|'
       '\': '、'
       ';': '；'
       ':': '：'
@@ -85,7 +92,6 @@ patch:
       '>': '》'
       '?': '？'
       '`': '·'
-      ' ': ' '
     
     # 全角中文标点
     full_shape:
@@ -121,7 +127,6 @@ patch:
       '>': '》'
       '?': '？'
       '`': '·'
-      ' ': '　' 
   
   # 基础输入配置
   speller:
@@ -158,9 +163,9 @@ patch:
     - { when: always, accept: "Control+period", toggle: ascii_punct }
 
   "recognizer/patterns/+":  # 一些常见的英文组合，当正则匹配到这些时，都不会生成候选词，而只输入英文
-      email: "^[-_.0-9A-Za-z]+@.*$"
-      uppercase: "[A-Z][-_+.'0-9A-Za-z]*$"
-      url: "^(www[.]|https?:|ftp[.:]|mailto:|file:|localhost).*$|^[a-z]+[.].+$"
+    email: "^[-_.0-9A-Za-z]+@.*$"
+    uppercase: "[A-Z][-_+.'0-9A-Za-z]*$"
+    url: "^(www[.]|https?:|ftp[.:]|mailto:|file:|localhost).*$|^[a-z]+[.].+$"
   
     # 把 Lua 过滤器接入引擎（用追加，避免覆盖你已有 filters）
   "engine/filters/+":
