@@ -18,37 +18,6 @@ function date_translator(input, seg)
     yield(Candidate("date", seg.start, seg._end, os.date("%Y年%m月%d日"), ""))
     yield(Candidate("date", seg.start, seg._end, os.date("%Y-%m-%d"), ""))
     yield(Candidate("date", seg.start, seg._end, os.date("%Y.%m.%d"), ""))
-
-    -- 附加：当天农历（最后一位候选），并标注节日或节气（如果有）
-    local ok, lunar = pcall(function()
-      local lunar_mod = require("lunarDate")
-      local jq_mod = require("lunarJq")
-      local gdate = os.date("%Y%m%d")
-      local info = lunar_mod.Date2LunarInfo(gdate)
-      if not info then return nil end
-      local lunar_text = info.year .. " " .. info.monthName .. " " .. info.dayName
-      -- 简单节日表（常见节日）
-      local festival_map = {
-        ["1-1"] = "春节", ["1-15"] = "元宵", ["5-5"] = "端午", ["8-15"] = "中秋", ["7-7"] = "七夕", ["12-8"] = "腊八"
-      }
-      local key = tostring(info.monthNum) .. "-" .. tostring(info.dayNum)
-      local special = festival_map[key] or ""
-      -- 节气检测：调用 jq_mod.JQtest
-      local jqname = ""
-      if jq_mod and type(jq_mod.JQtest) == "function" then
-        local jqres = jq_mod.JQtest(gdate) or ""
-        if jqres ~= "" then jqname = string.gsub(jqres, "^-", "") end
-      end
-      if jqname ~= "" then
-        if special ~= "" then special = special .. "、" .. jqname else special = jqname end
-      end
-      if special ~= "" then lunar_text = lunar_text .. "（" .. special .. "）" end
-      return lunar_text
-    end)
-    if ok and lunar then
-      yield(Candidate("date", seg.start, seg._end, lunar, "农历"))
-    end
-
     return
   end
 

@@ -1,0 +1,93 @@
+# weasel.custom.yaml (Refreshed Dracula for Weasel / 小狼毫)
+# Base scheme values come from dracula/rime (weasel.custom.yaml @ cb9db97).
+# This version updates the *placement* of style/layout options to match current Weasel config docs,
+# and adds a few newer UI knobs (dark-mode auto switching, shadow, wheel paging, abbreviate).
+
+patch:
+  # --- Global UI (recommended modern placement) ---
+  style/+:
+    # Light in light mode, Dark in dark mode (Windows 10 1809+)
+    color_scheme: dracula_light
+    color_scheme_dark: dracula
+
+    # Typography
+    font_point: 16
+    label_font_point: 14
+    comment_font_point: 14
+
+    # Behavior
+    horizontal: true
+    inline_preedit: true
+    paging_on_scroll: true
+    candidate_abbreviate_length: 18
+
+    # Rounded corners (newer param name supported; matches Squirrel naming)
+    corner_radius: 10
+    hilited_corner_radius: 8
+
+    # Layout (newer layout block)
+    layout/+:
+      align_type: center
+      baseline: 0
+      linespacing: 0
+
+      border_width: 0
+      margin_x: 12
+      margin_y: 10
+      spacing: 10
+      candidate_spacing: 6
+      hilite_spacing: 4
+      hilite_padding: 3
+
+      shadow_radius: 6
+      shadow_offset_x: 0
+      shadow_offset_y: 2
+
+  # --- Dracula schemes (merged into existing preset_color_schemes) ---
+  preset_color_schemes/+:
+
+    dracula:
+      name: Dracula
+      author: Dracula Theme
+      candidate_format: "%c %@ "
+
+      # Colors are in ABGR (0xAABBGGRR). Without alpha: 0xBBGGRR.
+      back_color: 0x362A28
+      border_color: 0x362A28
+      text_color: 0x6CB8FF
+
+      hilited_text_color: 0x5A4744
+      hilited_back_color: 0xF2F8F8
+
+      hilited_candidate_label_color: 0xFAFAFA
+      hilited_candidate_text_color: 0xF2F8F8
+      hilited_candidate_back_color: 0xC679FF
+      hilited_comment_text_color: 0x362B00
+
+      candidate_text_color: 0xF993BD
+      comment_text_color: 0xFDE98B
+
+      # Required for style/layout/shadow_* to actually show (non-transparent)
+      shadow_color: 0x40000000
+
+    dracula_light:
+      name: Dracula Light
+      author: Dracula Theme
+      candidate_format: "%c %@ "
+
+      back_color: 0xF2F8F8
+      border_color: 0xF2F8F8
+      text_color: 0x362A28
+
+      hilited_text_color: 0x362A28
+      hilited_back_color: 0xF2F8F8
+
+      hilited_candidate_label_color: 0xF2F8F8
+      hilited_candidate_text_color: 0xF2F8F8
+      hilited_candidate_back_color: 0xC679FF
+      hilited_comment_text_color: 0x362B00
+
+      candidate_text_color: 0x362A28
+      comment_text_color: 0x5A4744
+
+      shadow_color: 0x30000000

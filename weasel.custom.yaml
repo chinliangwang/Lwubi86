@@ -1,99 +1,101 @@
-patch:
-  style:
-    corner_radius: 20
-    font_face: "方正悠黑_GBK"
-    font_point: 12 # 候选字体大小
-    horizontal: true
-    inline_preedit: true
-    label_font_point: 8 # 候选标签字体大小
-    label_format: "%s"
-    layout:
-      border_width: 1
-      candidate_spacing: 8
-      hilite_padding: 8
-      hilite_spacing: 6
-      margin_x: 5
-      margin_y: 8
-      min_width: 64
-      round_corner: 0
-      spacing: 15
-      corner_radius: 7
-      shadow_offset_x: 0
-      shadow_offset_y: 6
-      shadow_radius: 13 # 阴影半径
-      align_type: center # 垂直居中
-    color_scheme: win10_black # 亮色皮肤
-    color_scheme_dark: win10_black # 暗色皮肤
+hilited_candidate_back_color# weasel.custom.yaml — Dracula (Weasel) + tuned highlight sizing
+# What this version fixes:
+# - When there is only 1 candidate, the hilited background looks "too long".
+#   Root cause is usually the default style/layout/min_width (often 160) plus padding.
+#   We explicitly set min_width to 0 and tighten hilite_padding_x/y.
+#
+# Docs (Weasel style/layout): min_width / max_width / hilite_padding_x/y etc.
+# https://hantang.github.io/rime-docs/en/windows/weasel/Customization/
 
-  preset_color_schemes:
-    green_dark:
-      name: "春夜绿"
-      author: "thepoy"
-      back_color: 0x363332
-      border_color: 0x363332
-      text_color: 0xFAFAFF
-      hilited_text_color: 0xFFFFFF
-      hilited_back_color: 0x4734D6
-      hilited_candidate_text_color: 0xFFFFFF
-      hilited_candidate_back_color: 0x347440
-      hilited_label_color: 0xFAFAFF # 高亮标签颜色
-      candidate_text_color: 0xFFFFFF
-      comment_text_color: 0xFCFCFC
-      label_font_point: 10
-    red_dark:
-      name: "夏日红"
-      author: "thepoy"
-      back_color: 0x363332
-      border_color: 0x363332
-      text_color: 0xFAFAFF
-      hilited_text_color: 0xFFFFFF
-      hilited_back_color: 0x4734D6
-      hilited_candidate_text_color: 0xFFFFFF
-      hilited_candidate_back_color: 0x4734D6
-      hilited_label_color: 0xFAFAFF # 高亮标签颜色
-      candidate_text_color: 0xFFFFFF
-      comment_text_color: 0xFCFCFC
-    orange_dark:
-      name: "秋日橙"
-      author: "thepoy"
-      back_color: 0x363332
-      border_color: 0x363332
-      text_color: 0xFAFAFF
-      hilited_text_color: 0xFFFFFF
-      hilited_back_color: 0x4734D6
-      hilited_candidate_text_color: 0xFFFFFF
-      hilited_candidate_back_color: 0x1D66CD
-      hilited_label_color: 0xFAFAFF # 高亮标签颜色
-      candidate_text_color: 0xFFFFFF
-      comment_text_color: 0xFCFCFC
-    win10_black:
-      name: "win10黑/冬时蓝"
-      author: "thepoy"
-      back_color: 0x363332
-      border_color: 0x363332
-      text_color: 0xFAFAFF
-      hilited_text_color: 0xFFFFFF
-      hilited_back_color: 0x4734D6
-      hilited_candidate_text_color: 0xFFFFFF
-      hilited_candidate_back_color: 0xCD661D
-      hilited_label_color: 0xFAFAFF # 高亮标签颜色
-      candidate_text_color: 0xFFFFFF
-      comment_text_color: 0xFCFCFC
-    transparent-green:
-      name: "透明绿"
-      author: "thepoy"
-      color_format: rgba
-      back_color: 0xfffffff2
-      shadow_color: 0x00000020
-      border_color: 0xccc
-      text_color: 0x000
-      label_color: 0x717171
-      hilited_text_color: 0xFFFFFF
-      hilited_back_color: 0x4734D6
-      hilited_candidate_text_color: 0xFFFFFF
-      hilited_candidate_back_color: 0x407434f2
-      # hilited_candidate_label_color: 0xFFFFF
-      hilited_label_color: 0xcbcbcb # 高亮标签颜色
-      hilited_comment_text_color: 0xddd # 高亮注释颜色
-      candidate_text_color: 0x000 # 候选文字颜色
-      comment_text_color: 0x999
+patch:
+  # --- scheme selection ---
+  "style/color_scheme": dracula_light
+  "style/color_scheme_dark": dracula
+
+  # --- candidate list orientation ---
+  "style/horizontal": true
+  "style/vertical_text": false
+  "style/text_orientation": horizontal
+
+  # --- behavior ---
+  "style/inline_preedit": true
+  "style/paging_on_scroll": true
+  "style/candidate_abbreviate_length": 18
+
+  # --- layout (shrink-to-content + tighter hilite) ---
+  # Make the window shrink to content (default min_width is often 160)
+  "style/layout/min_width": 0
+  "style/layout/max_width": 0
+
+  "style/layout/margin_x": 12
+  "style/layout/margin_y": 10
+  "style/layout/spacing": 10
+  "style/layout/candidate_spacing": 6
+  "style/layout/hilite_spacing": 4
+
+  # keep generic for backward-compat, but prefer x/y if supported
+  "style/layout/hilite_padding": 2
+  "style/layout/hilite_padding_x": 4
+  "style/layout/hilite_padding_y": 3
+
+  "style/layout/round_corner": 10
+  "style/layout/hilited_corner_radius": 8
+
+  # shadow
+  "style/layout/shadow_radius": 6
+  "style/layout/shadow_offset_x": 0
+  "style/layout/shadow_offset_y": 2
+
+  # baseline / align
+  "style/layout/baseline": 0
+  "style/layout/linespacing": 0
+  "style/layout/align_type": center
+
+  # --- Dracula schemes ---
+  "preset_color_schemes/+":
+    dracula:
+      name: Dracula
+      author: Dracula Theme
+
+      # remove trailing space to avoid visual "extra tail" when comment is empty
+      candidate_format: "%c %@"
+
+      back_color: 0x362A28
+      border_color: 0x362A28
+      text_color: 0x6CB8FF
+
+      hilited_text_color: 0x5A4744
+      hilited_back_color: 0xF2F8F8
+
+      hilited_candidate_label_color: 0xFAFAFA
+      hilited_candidate_text_color: 0xF2F8F8
+      hilited_candidate_back_color: 0xF993BD
+      hilited_comment_text_color: 0x362B00
+
+      candidate_text_color: 0xF993BD
+      comment_text_color: 0xFDE98B
+
+      shadow_color: 0x40000000
+
+    dracula_light:
+      name: Dracula Light
+      author: Dracula Theme
+
+      candidate_format: "%c %@"
+
+      back_color: 0xF2F8F8
+      border_color: 0xF2F8F8
+      text_color: 0x362A28
+
+      hilited_text_color: 0x362A28
+      hilited_back_color: 0xF2F8F8
+
+      hilited_candidate_label_color: 0xF2F8F8
+      hilited_candidate_text_color: 0xF2F8F8
+      hilited_candidate_back_color: 0xF993BD
+      hilited_comment_text_color: 0x362B00
+
+      candidate_text_color: 0x362A28
+      comment_text_color: 0x5A4744
+
+      shadow_color: 0x30000000
