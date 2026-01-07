@@ -140,7 +140,7 @@ patch:
   "translator/encode_commit_history": false  # 不记录上屏历史
   "translator/enable_user_dict": false   # 禁用用户词典
   "translator/enable_charset_filter": false   # 禁用字符集过滤
-  "translator/enable_completion": true   # 自动补全
+  "translator/enable_completion": false   # 关闭自动补全
 
   # 左 Shift 临时切换英文功能 https://gist.github.com/lotem/2981316
   # 使用 ascii_composer 的 switch_key 配置
@@ -167,9 +167,16 @@ patch:
     uppercase: "[A-Z][-_+.'0-9A-Za-z]*$"
     url: "^(www[.]|https?:|ftp[.:]|mailto:|file:|localhost).*$|^[a-z]+[.].+$"
   
-    # 把 Lua 过滤器接入引擎（用追加，避免覆盖你已有 filters）
+    # 把过滤器接入引擎
   "engine/filters/+":
-    - lua_filter@charset_mode_filter
+    - reverse_lookup_filter@wubi_code_hint   # 编码提示
+    - lua_filter@charset_mode_filter          # 字符集过滤
+
+  # 编码提示配置：用 wubi86 词典反查编码并显示
+  wubi_code_hint:
+    tags: [ abc ]              # 对正常输入（abc tag）生效
+    dictionary: wubi86         # 用 wubi86 词典反查编码
+    overwrite_comment: true    # 覆盖 comment
 
   # 告诉 Lua 字表相对路径（相对于 Rime 用户目录）
   charset/files:
