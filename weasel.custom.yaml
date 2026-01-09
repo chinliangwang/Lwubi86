@@ -1,101 +1,196 @@
-hilited_candidate_back_color# weasel.custom.yaml — Dracula (Weasel) + tuned highlight sizing
-# What this version fixes:
-# - When there is only 1 candidate, the hilited background looks "too long".
-#   Root cause is usually the default style/layout/min_width (often 160) plus padding.
-#   We explicitly set min_width to 0 and tighten hilite_padding_x/y.
-#
-# Docs (Weasel style/layout): min_width / max_width / hilite_padding_x/y etc.
-# https://hantang.github.io/rime-docs/en/windows/weasel/Customization/
+# weasel.custom.yaml — Windows 11 输入法主题复刻
+# 数据来源：Windows 11 注册表 HKCU\Software\Microsoft\TabletTip\1.7
+# 颜色格式：小狼毫使用 ABGR (0xAABBGGRR)
 
 patch:
-  # --- scheme selection ---
-  "style/color_scheme": dracula_light
-  "style/color_scheme_dark": dracula
+  # === 主题选择（浅色主题为主） ===
+  "style/color_scheme": win11_light
+  "style/color_scheme_dark": win11_dark
 
-  # --- candidate list orientation ---
+  # === 字体设置 (来自注册表 FontStyleTSF3) ===
+  # 原始值：14.00pt;Regular;;Microsoft YaHei UI
+  "style/font_face": "Microsoft YaHei UI"
+  "style/font_point": 14
+  "style/label_font_face": "Microsoft YaHei UI"
+  "style/label_font_point": 14
+  "style/comment_font_face": "Microsoft YaHei UI"
+  "style/comment_font_point": 12
+
+  # === 候选词列表方向 ===
   "style/horizontal": true
   "style/vertical_text": false
   "style/text_orientation": horizontal
 
-  # --- behavior ---
+  # === 行为设置 ===
   "style/inline_preedit": true
   "style/paging_on_scroll": true
-  "style/candidate_abbreviate_length": 18
+  "style/candidate_abbreviate_length": 20
 
-  # --- layout (shrink-to-content + tighter hilite) ---
-  # Make the window shrink to content (default min_width is often 160)
+  # === 布局参数 ===
   "style/layout/min_width": 0
   "style/layout/max_width": 0
+  "style/layout/min_height": 0
+  "style/layout/max_height": 0
 
+  # 边框：HasBorder = 0，所以基本无边框
+  "style/layout/border_width": 0
   "style/layout/margin_x": 12
-  "style/layout/margin_y": 10
+  "style/layout/margin_y": 8
   "style/layout/spacing": 10
-  "style/layout/candidate_spacing": 6
+  "style/layout/candidate_spacing": 16
   "style/layout/hilite_spacing": 4
 
-  # keep generic for backward-compat, but prefer x/y if supported
-  "style/layout/hilite_padding": 2
-  "style/layout/hilite_padding_x": 4
-  "style/layout/hilite_padding_y": 3
+  "style/layout/hilite_padding": 4
+  "style/layout/hilite_padding_x": 8
+  "style/layout/hilite_padding_y": 5
 
-  "style/layout/round_corner": 10
-  "style/layout/hilited_corner_radius": 8
+  # 圆角设置 (Windows 11 Fluent Design)
+  "style/layout/round_corner": 8
+  "style/layout/corner_radius": 8
+  "style/layout/hilited_corner_radius": 4
 
-  # shadow
-  "style/layout/shadow_radius": 6
+  # 阴影效果
+  "style/layout/shadow_radius": 10
   "style/layout/shadow_offset_x": 0
-  "style/layout/shadow_offset_y": 2
+  "style/layout/shadow_offset_y": 3
 
-  # baseline / align
   "style/layout/baseline": 0
   "style/layout/linespacing": 0
   "style/layout/align_type": center
 
-  # --- Dracula schemes ---
-  "preset_color_schemes/+":
-    dracula:
-      name: Dracula
-      author: Dracula Theme
+  # =====================================================
+  # 【主配色】Windows 11 浅色主题 (LightTheme)
+  # 注册表来源：HKCU\Software\Microsoft\TabletTip\1.7
+  #
+  # KeyboardBackgroundSolidColor: 243,243,243 = #F3F3F3
+  # KeyLabelColor: 0,0,0 = #000000
+  # SuggestionTextColor: 0,0,0 = #000000
+  # AccentColor: 系统强调色 #0078D4
+  # KeyTransparency: 0 (不透明)
+  # HasBorder: 0 (无边框)
+  # =====================================================
+  "preset_color_schemes/win11_light":
+    name: "Win11 浅色"
+    author: "Windows 11 LightTheme"
 
-      # remove trailing space to avoid visual "extra tail" when comment is empty
-      candidate_format: "%c %@"
+    candidate_format: "%c %@"
 
-      back_color: 0x362A28
-      border_color: 0x362A28
-      text_color: 0x6CB8FF
+    # 背景色：RGB(243,243,243) = #F3F3F3
+    # ABGR = 0xFF + F3 + F3 + F3 = 0xFFF3F3F3
+    back_color: 0xFFF3F3F3
 
-      hilited_text_color: 0x5A4744
-      hilited_back_color: 0xF2F8F8
+    # 边框色（浅灰）
+    border_color: 0xFFE0E0E0
 
-      hilited_candidate_label_color: 0xFAFAFA
-      hilited_candidate_text_color: 0xF2F8F8
-      hilited_candidate_back_color: 0xF993BD
-      hilited_comment_text_color: 0x362B00
+    # 文字颜色：黑色 RGB(0,0,0)
+    text_color: 0xFF000000
+    hilited_text_color: 0xFF000000
+    hilited_back_color: 0xFFF3F3F3
 
-      candidate_text_color: 0xF993BD
-      comment_text_color: 0xFDE98B
+    # 候选词颜色：黑色
+    candidate_text_color: 0xFF000000
+    label_color: 0xFF666666
 
-      shadow_color: 0x40000000
+    # 高亮候选词 - 系统强调色 #0078D4
+    # R=0(0x00), G=120(0x78), B=212(0xD4)
+    # ABGR = 0xFF + D4 + 78 + 00 = 0xFFD47800
+    hilited_candidate_text_color: 0xFFFFFFFF
+    hilited_candidate_back_color: 0xFFD47800
+    hilited_candidate_label_color: 0xFFFFFFFF
 
-    dracula_light:
-      name: Dracula Light
-      author: Dracula Theme
+    # 编码提示颜色
+    comment_text_color: 0xFF888888
+    hilited_comment_text_color: 0xFFFFFFFF
 
-      candidate_format: "%c %@"
+    # 阴影
+    shadow_color: 0x20000000
 
-      back_color: 0xF2F8F8
-      border_color: 0xF2F8F8
-      text_color: 0x362A28
+  # =====================================================
+  # 【主配色-深色】Windows 11 深色主题 (DarkTheme)
+  # 跟随系统深色模式自动切换
+  # =====================================================
+  "preset_color_schemes/win11_dark":
+    name: "Win11 深色"
+    author: "Windows 11 DarkTheme"
 
-      hilited_text_color: 0x362A28
-      hilited_back_color: 0xF2F8F8
+    candidate_format: "%c %@"
 
-      hilited_candidate_label_color: 0xF2F8F8
-      hilited_candidate_text_color: 0xF2F8F8
-      hilited_candidate_back_color: 0xF993BD
-      hilited_comment_text_color: 0x362B00
+    # 背景色：深灰 RGB(45,45,45) = #2D2D2D
+    back_color: 0xFF2D2D2D
+    border_color: 0xFF404040
 
-      candidate_text_color: 0x362A28
-      comment_text_color: 0x5A4744
+    # 文字颜色：白色
+    text_color: 0xFFFFFFFF
+    hilited_text_color: 0xFFFFFFFF
+    hilited_back_color: 0xFF2D2D2D
 
-      shadow_color: 0x30000000
+    # 候选词颜色：白色
+    candidate_text_color: 0xFFFFFFFF
+    label_color: 0xFFA0A0A0
+
+    # 高亮候选词 - 系统强调色 #0078D4
+    hilited_candidate_text_color: 0xFFFFFFFF
+    hilited_candidate_back_color: 0xFFD47800
+    hilited_candidate_label_color: 0xFFFFFFFF
+
+    # 编码提示颜色
+    comment_text_color: 0xFF909090
+    hilited_comment_text_color: 0xFFFFFFFF
+
+    # 阴影
+    shadow_color: 0x50000000
+
+  # =====================================================
+  # 【备选】Windows 11 冰蓝色主题 (IceBlueTheme)
+  # 基于用户截图精确调整
+  # =====================================================
+  "preset_color_schemes/win11_ice_blue":
+    name: "Win11 冰蓝"
+    author: "Windows 11 IceBlueTheme"
+
+    candidate_format: "%c %@"
+
+    # 背景色：深灰蓝色 RGB(75,90,105) = #4B5A69
+    back_color: 0xFF695A4B
+    border_color: 0xFF5A4B3C
+
+    # 文字颜色：白色
+    text_color: 0xFFFFFFFF
+    hilited_text_color: 0xFFFFFFFF
+    hilited_back_color: 0xFF695A4B
+
+    # 候选词颜色：白色
+    candidate_text_color: 0xFFFFFFFF
+    label_color: 0xE0FFFFFF
+
+    # 高亮候选词 - 淡蓝色 RGB(140,175,200) = #8CAFC8
+    hilited_candidate_text_color: 0xFFFFFFFF
+    hilited_candidate_back_color: 0xFFC8AF8C
+    hilited_candidate_label_color: 0xFFFFFFFF
+
+    # 编码提示颜色
+    comment_text_color: 0xA0FFFFFF
+    hilited_comment_text_color: 0xFFFFFFFF
+
+    # 阴影
+    shadow_color: 0x30000000
+
+  "preset_color_schemes/win11_ice_blue_dark":
+    name: "Win11 冰蓝 深色"
+    author: "Windows 11 IceBlueTheme Dark"
+
+    candidate_format: "%c %@"
+
+    back_color: 0xFF695A4B
+    border_color: 0xFF5A4B3C
+    text_color: 0xFFFFFFFF
+    hilited_text_color: 0xFFFFFFFF
+    hilited_back_color: 0xFF695A4B
+    candidate_text_color: 0xFFFFFFFF
+    label_color: 0xE0FFFFFF
+    hilited_candidate_text_color: 0xFFFFFFFF
+    hilited_candidate_back_color: 0xFFC8AF8C
+    hilited_candidate_label_color: 0xFFFFFFFF
+    comment_text_color: 0xA0FFFFFF
+    hilited_comment_text_color: 0xFFFFFFFF
+    shadow_color: 0x50000000
