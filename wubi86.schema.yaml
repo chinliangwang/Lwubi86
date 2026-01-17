@@ -20,7 +20,7 @@ switches:
     states: [ 中文, 西文 ]
   - name: full_shape
     states: [ 半角, 全角 ]
-  - name: GB2312
+  - name: gb2312
     reset: 1
     states: [ 关, 常用 ]
   - name: ascii_punct
