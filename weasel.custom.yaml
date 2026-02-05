@@ -4,59 +4,60 @@
 
 patch:
   # === 主题选择（浅色主题为主） ===
-  "style/color_scheme": win11_light
-  "style/color_scheme_dark": win11_dark
+  style/+:
+    color_scheme: win11_light
+    color_scheme_dark: win11_dark
 
-  # === 字体设置 (来自注册表 FontStyleTSF3) ===
-  # 原始值：14.00pt;Regular;;Microsoft YaHei UI
-  "style/font_face": "Microsoft YaHei UI"
-  "style/font_point": 14
-  "style/label_font_face": "Microsoft YaHei UI"
-  "style/label_font_point": 14
-  "style/comment_font_face": "Microsoft YaHei UI"
-  "style/comment_font_point": 12
+    # === 字体设置 (来自注册表 FontStyleTSF3) ===
+    # 原始值：14.00pt;Regular;;Microsoft YaHei UI
+    font_face: "Microsoft YaHei UI"
+    font_point: 14
+    label_font_face: "Microsoft YaHei UI"
+    label_font_point: 14
+    comment_font_face: "Microsoft YaHei UI"
+    comment_font_point: 12
 
-  # === 候选词列表方向 ===
-  "style/horizontal": true
-  "style/vertical_text": false
-  "style/text_orientation": horizontal
+    # === 候选词列表方向 ===
+    horizontal: true
+    vertical_text: false
+    text_orientation: horizontal
 
-  # === 行为设置 ===
-  "style/inline_preedit": true
-  "style/paging_on_scroll": true
-  "style/candidate_abbreviate_length": 20
+    # === 行为设置 ===
+    inline_preedit: true
+    paging_on_scroll: true
+    candidate_abbreviate_length: 20
 
-  # === 布局参数 ===
-  "style/layout/min_width": 0
-  "style/layout/max_width": 0
-  "style/layout/min_height": 0
-  "style/layout/max_height": 0
+    # === 布局参数 ===
+    layout/+:
+      min_width: 0
+      max_width: 0
+      min_height: 0
+      max_height: 0
 
-  # 边框：HasBorder = 0，所以基本无边框
-  "style/layout/border_width": 0
-  "style/layout/margin_x": 12
-  "style/layout/margin_y": 8
-  "style/layout/spacing": 10
-  "style/layout/candidate_spacing": 16
-  "style/layout/hilite_spacing": 4
+      # 边框：HasBorder = 0，所以基本无边框
+      border_width: 0
+      margin_x: 12
+      margin_y: 8
+      spacing: 10
+      candidate_spacing: 16
+      hilite_spacing: 4
 
-  "style/layout/hilite_padding": 4
-  "style/layout/hilite_padding_x": 8
-  "style/layout/hilite_padding_y": 5
+      hilite_padding: 4
+      hilite_padding_x: 8
+      hilite_padding_y: 5
 
-  # 圆角设置 (Windows 11 Fluent Design)
-  "style/layout/round_corner": 8
-  "style/layout/corner_radius": 8
-  "style/layout/hilited_corner_radius": 4
+      # 圆角设置 (Windows 11 Fluent Design)
+      corner_radius: 8
+      hilited_corner_radius: 4
 
-  # 阴影效果
-  "style/layout/shadow_radius": 10
-  "style/layout/shadow_offset_x": 0
-  "style/layout/shadow_offset_y": 3
+      # 阴影效果
+      shadow_radius: 10
+      shadow_offset_x: 0
+      shadow_offset_y: 3
 
-  "style/layout/baseline": 0
-  "style/layout/linespacing": 0
-  "style/layout/align_type": center
+      baseline: 0
+      linespacing: 0
+      align_type: center
 
   # =====================================================
   # 【主配色】Windows 11 浅色主题 (LightTheme)
