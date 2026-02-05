@@ -29,3 +29,7 @@ history/
 *.bak
 /.github
 /.trae
+
+# backups/tmp
+backups/*
+!backups/.gitkeep
