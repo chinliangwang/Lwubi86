@@ -1,7 +1,8 @@
 -- 严格字符集过滤（GB2312 / GBK / ALL）
 -- 设计：
 --  - 两个布尔开关：GB2312、GBK；GB2312优先，其次GBK；都关=全集
---  - 只对汉字做过滤（CJK统一表 + 扩A + 兼容表 + 扩B~F）；其他字符放行
+--  - 仅对 table 翻译器候选做过滤（避免影响标点映射/符号输入）
+--  - 过滤规则：候选文本中任意非 ASCII 字符不在 GB2312 字表中 → 过滤
 --  - 字表加载失败 → 安全放行，避免“打不出字”
 
 local M = {}
@@ -28,12 +29,9 @@ local function load_charset(path)
   return t
 end
 
--- 是否汉字（过滤仅作用于这些区段）
-local function is_cjk(cp)
-  return (cp >= 0x4E00 and cp <= 0x9FFF)    -- CJK Unified Ideographs
-      or (cp >= 0x3400 and cp <= 0x4DBF)    -- CJK Ext-A
-      or (cp >= 0xF900 and cp <= 0xFAFF)    -- CJK Compatibility Ideographs
-      or (cp >= 0x20000 and cp <= 0x2FA1F)  -- CJK Ext-B..F（覆盖到 2FA1F）
+local function should_filter_candidate(cand)
+  -- 仅过滤 table 翻译器候选，避免影响标点/符号等非词库输出
+  return cand.type == "table" or cand.type == "user_table" or cand.type == "sentence"
 end
 
 function M.init(env)
@@ -65,12 +63,12 @@ function M.func(input, env)
   local set = use_gb2312 and env.gb2312_map or nil
 
   for cand in input:iter() do
-    if not set then
+    if not set or not should_filter_candidate(cand) then
       yield(cand)  -- 全集：不过滤
     else
       local ok = true
       for _, cp in utf8.codes(cand.text) do
-        if is_cjk(cp) and not set[cp] then
+        if cp >= 0x80 and not set[cp] then
           ok = false; break
         end
       end
