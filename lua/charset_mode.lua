@@ -31,7 +31,12 @@ end
 
 local function should_filter_candidate(cand)
   -- 仅过滤 table 翻译器候选，避免影响标点/符号等非词库输出
-  return cand.type == "table" or cand.type == "user_table" or cand.type == "sentence"
+  -- 注意：开启 translator/enable_completion 后，候选类型会出现 completion；
+  -- 若不纳入这里，会绕过 GB2312 过滤。
+  return cand.type == "table"
+      or cand.type == "user_table"
+      or cand.type == "sentence"
+      or cand.type == "completion"
 end
 
 function M.init(env)
