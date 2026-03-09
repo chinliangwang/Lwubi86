@@ -148,12 +148,13 @@ patch:
   "translator/comment_format":            # 清除补全编码提示
     - "xform/.*$//"
 
-  # 左 Shift 临时切换英文功能 https://gist.github.com/lotem/2981316
-  # 使用 ascii_composer 的 switch_key 配置
+  # 左 Shift 改为全局中英文切换：
+  # 若已有输入编码，则先按英文原样上屏，再切换到英文模式
+  # 这样更接近 QQ/微软/搜狗五笔的手感
   ascii_composer:
     good_old_caps_lock: true
     switch_key:
-      Shift_L: inline_ascii    # 左 Shift 临时切换到英文输入
+      Shift_L: commit_code     # 左 Shift 全局切换中英文，并保留已输入字母
       Shift_R: noop
       Control_L: noop
       Control_R: noop
