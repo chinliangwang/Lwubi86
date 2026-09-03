@@ -1,0 +1,10 @@
+# Rime custom settings for light_wubi86.
+# This file keeps macOS-friendly defaults separate from the schema.
+#
+# Behavior switches (auto frequency, paging keys, Shift select) are declared
+# in the schema without live `states`, so they do not appear in the F4 menu.
+# To expose one while testing, uncomment its `# states:` line in
+# light_wubi86.schema.yaml and redeploy.
+
+patch:
+  menu/page_size: 5

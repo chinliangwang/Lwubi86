@@ -1,0 +1,69 @@
+# Archived Dracula theme — not active. Copy sections into squirrel.custom.yaml to restore.
+# Color order: 0xAABBGGRR
+
+patch:
+  "style/color_scheme": dracula_alucard
+  "style/color_scheme_dark": dracula_classic
+  "style/candidate_list_layout": linear
+  "style/text_orientation": horizontal
+  "style/inline_preedit": true
+  "style/candidate_format": "[label]. [candidate] [comment]"
+  "style/translucency": true
+  "style/corner_radius": 10
+  "style/hilited_corner_radius": 8
+  "style/border_height": -2
+  "style/border_width": -2
+  "style/line_spacing": 5
+  "style/spacing": 8
+  "style/shadow_size": 4
+  "style/surrounding_extra_expansion": 0
+  "style/color_space": display_p3
+  "style/mutual_exclusive": true
+  "style/memorize_size": true
+  "style/status_message_type": mix
+  "style/font_face": "PingFang SC"
+  "style/font_point": 16
+  "style/label_font_face": "SF Pro Text"
+  "style/label_font_point": 11
+  "style/comment_font_face": "SF Pro Text"
+  "style/comment_font_point": 11
+
+  "preset_color_schemes/dracula_classic":
+    name: "Dracula Classic"
+    author: "lightWubi86"
+    color_space: display_p3
+    translucency: true
+    corner_radius: 10
+    hilited_corner_radius: 7
+    back_color: 0xE8362A28
+    border_color: 0x70F993BD
+    text_color: 0xFFFDE98B
+    hilited_text_color: 0xFFF2F8F8
+    hilited_back_color: 0x502C2221
+    candidate_text_color: 0xFFF2F8F8
+    label_color: 0xFFA47262
+    comment_text_color: 0xC8FDE98B
+    hilited_candidate_back_color: 0xF0F993BD
+    hilited_candidate_text_color: 0xFF362A28
+    hilited_candidate_label_color: 0xFF362A28
+    hilited_comment_text_color: 0xC8362A28
+
+  "preset_color_schemes/dracula_alucard":
+    name: "Dracula Alucard"
+    author: "lightWubi86"
+    color_space: display_p3
+    translucency: true
+    corner_radius: 10
+    hilited_corner_radius: 10
+    back_color: 0xD8EBFBFF
+    border_color: 0x28C0CCCE
+    text_color: 0xFF966A03
+    hilited_text_color: 0xFF1F1F1F
+    hilited_back_color: 0x30DFE9EC
+    candidate_text_color: 0xFF1F1F1F
+    label_color: 0xA64B666C
+    comment_text_color: 0x904B666C
+    hilited_candidate_back_color: 0xCCDECFCF
+    hilited_candidate_text_color: 0xFF1F1F1F
+    hilited_candidate_label_color: 0xFFC94A64
+    hilited_comment_text_color: 0xFF966A03

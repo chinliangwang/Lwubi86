@@ -1,0 +1,32 @@
+# Squirrel native theme for lightWubi86.
+#
+# Uses built-in `native` (系统配色): AppKit semantic colors, accent highlight,
+# auto light/dark when BOTH color_scheme and color_scheme_dark are `native`.
+#
+# References:
+# - LEO Yoon-Tsaw: #449, #934, squirrel.yaml 配置指南
+# - Official defaults: github.com/rime/squirrel/blob/master/data/squirrel.yaml
+# - Restore Dracula: rime/style/dracula.squirrel.custom.yaml.example
+
+patch:
+  "style/color_scheme": native
+  "style/color_scheme_dark": native
+  "style/candidate_list_layout": linear
+  "style/text_orientation": horizontal
+  "style/inline_preedit": true
+  "style/candidate_format": "[label]. [candidate] [comment]"
+  "style/corner_radius": 7
+  "style/hilited_corner_radius": 0
+  "style/border_height": -2
+  "style/border_width": -2
+  "style/line_spacing": 5
+  "style/spacing": 8
+  "style/shadow_size": 0
+  "style/memorize_size": true
+  "style/mutual_exclusive": false
+  "style/translucency": false
+  "style/status_message_type": mix
+  "style/font_face": "PingFang SC"
+  "style/font_point": 16
+  "style/label_font_point": 12
+  "style/comment_font_point": 12

@@ -1,0 +1,293 @@
+# Rime schema
+# encoding: utf-8
+
+schema:
+  schema_id: light_wubi86
+  name: 五笔字型
+  version: "0.1.0-local"
+  author:
+    - "lightWubi86 project"
+  description: |
+    Wubi 86 schema for Rime. Dictionaries are generated locally and are not
+    published in this repository.
+  dependencies:
+    - light_wubi86_pinyin
+    - light_wubi86_phrases
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [中文, 西文]
+  - name: full_shape
+    reset: 0
+    states: [半角, 全角]
+  - name: ascii_punct
+    reset: 0
+    states: [。，, ．，]
+  - name: simplification
+    reset: 0
+    states: [简体, 繁体]
+  - options: [charset_common, charset_gbk, charset_gb18030]
+    reset: 0
+    states: [常用字, GBK, GB18030]
+  # Behavior options: no live states, so they stay off the F4 menu. Lua still
+  # reads them via get_option. To show a switch while testing, uncomment its
+  # `# states:` line below and redeploy.
+  - name: manual_frequency_step
+    reset: 0
+    # states: [调至首位, 只前移]
+  - name: auto_frequency
+    reset: 0
+    # states: [自动调频关, 自动调频开]
+  - name: enter_commit_code
+    reset: 0
+    # states: [回车清码, 回车上码]
+  - name: page_brackets
+    reset: 0
+    # states: ["关闭[]翻页", "[]翻页"]
+  - name: page_tab
+    reset: 0
+    # states: [关闭Tab翻页, Tab翻页]
+  - name: shift_candidate_select
+    reset: 0
+    # states: [Shift不选重, Shift选重]
+
+
+engine:
+  processors:
+    - lua_processor@right_shift_switch
+    - lua_processor@status_hotkeys
+    - ascii_composer
+    - recognizer
+    - lua_processor@runtime_editor
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - affix_segmentor@pinyin_aux
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - table_translator@pinyin_aux
+    - lua_translator@date_translator
+    - lua_translator@runtime_words
+    - table_translator
+    - table_translator@phrases
+  filters:
+    - lua_filter@charset_filter
+    - simplifier@traditionalize
+    - lua_filter@code_hint_filter
+    - uniquifier
+
+speller:
+  alphabet: zyxwvutsrqponmlkjihgfedcba
+  delimiter: " '"
+  auto_select: true
+  max_code_length: 4
+  auto_clear: max_length
+
+translator:
+  dictionary: light_wubi86
+  enable_charset_filter: false
+  enable_completion: true
+  enable_encoder: false
+  enable_sentence: false
+  enable_user_dict: false
+  user_dict: light_wubi86_user
+  encode_commit_history: false
+  max_phrase_length: 4
+  disable_user_dict_for_patterns:
+    - "^z.*$"
+  comment_format:
+    - "xform/.*$//"
+
+phrases:
+  dictionary: light_wubi86_phrases
+  enable_charset_filter: false
+  enable_completion: false
+  enable_encoder: false
+  enable_sentence: false
+  enable_user_dict: false
+  encode_commit_history: false
+  max_phrase_length: 4
+  comment_format:
+    - "xform/.*$//"
+
+pinyin_aux:
+  tag: pinyin_aux
+  dictionary: light_wubi86_pinyin
+  preedit_format:
+    - "xform/([nl])v/$1ü/"
+    - "xform/([nl])ue/$1üe/"
+    - "xform/([jqxy])v/$1u/"
+  prefix: z
+  suffix: "'"
+  tips: "〔拼音〕"
+
+traditionalize:
+  option_name: simplification
+  opencc_config: s2t.json
+  tips: none
+
+charset:
+  files:
+    common: lua/charset/common.txt
+    gbk: lua/charset/gbk.txt
+    gb18030: lua/charset/gb18030.txt
+
+menu:
+  page_size: 5
+
+key_binder:
+  bindings:
+    - { when: composing, accept: "Control+p", send: Up }
+    - { when: composing, accept: "Control+n", send: Down }
+    - { when: composing, accept: "Control+b", send: Left }
+    - { when: composing, accept: "Control+f", send: Right }
+    - { when: composing, accept: "Control+a", send: Home }
+    - { when: composing, accept: "Control+e", send: End }
+    - { when: composing, accept: "Control+d", send: Delete }
+    - { when: composing, accept: "Control+k", send: "Shift+Delete" }
+    - { when: composing, accept: "Control+h", send: BackSpace }
+    - { when: composing, accept: "Control+g", send: Escape }
+    - { when: composing, accept: "Control+bracketleft", send: Escape }
+    - { when: composing, accept: "Control+y", send: Page_Up }
+    - { when: composing, accept: "Alt+v", send: Page_Up }
+    - { when: composing, accept: "Control+v", send: Page_Down }
+    - { when: has_menu, accept: minus, send: Page_Up }
+    - { when: has_menu, accept: equal, send: Page_Down }
+    # 逗号/句号在五笔里要上屏当前字再出，。；翻页只用 -/=
+    - { when: has_menu, accept: semicolon, send: 2 }
+    - { when: has_menu, accept: apostrophe, send: 3 }
+    - { when: composing, accept: Return, send: Escape }
+    - { when: always, accept: "Shift+space", toggle: full_shape }
+    - { when: always, accept: "Control+period", toggle: ascii_punct }
+    # Ctrl+M / Ctrl+Shift+M / Ctrl+J：见 lua/status_hotkeys.lua
+
+recognizer:
+  import_preset: default
+  patterns:
+    email: "^[-_.0-9A-Za-z]+@.*$"
+    pinyin_aux: "^z[a-z]*'?$"
+    uppercase: "[A-Z][-_+.'0-9A-Za-z]*$"
+    url: "^(www[.]|https?:|ftp[.:]|mailto:|file:|localhost).*$|^[a-z]+[.].+$"
+
+punctuator:
+  ascii_punct:
+    "`": { commit: "`" }
+    "~": { commit: "~" }
+    "!": { commit: "!" }
+    "@": { commit: "@" }
+    "#": { commit: "#" }
+    "$": { commit: "$" }
+    "%": { commit: "%" }
+    "^": { commit: "^" }
+    "&": { commit: "&" }
+    "*": { commit: "*" }
+    "(": { commit: "(" }
+    ")": { commit: ")" }
+    "-": { commit: "-" }
+    "_": { commit: "_" }
+    "=": { commit: "=" }
+    "+": { commit: "+" }
+    "\\": { commit: "\\" }
+    "|": { commit: "|" }
+    "[": { commit: "[" }
+    "]": { commit: "]" }
+    "{": { commit: "{" }
+    "}": { commit: "}" }
+    ";": { commit: ";" }
+    ":": { commit: ":" }
+    "'": { commit: "'" }
+    "\"": { commit: "\"" }
+    ",": { commit: "," }
+    ".": { commit: "." }
+    "<": { commit: "<" }
+    ">": { commit: ">" }
+    "/": { commit: "/" }
+    "?": { commit: "?" }
+  # 中文标点：逗号句号等；[]{}<> 为【】「」《》（日常中文输入，不是 ASCII）
+  half_shape:
+    "`": { commit: "·" }
+    "~": { commit: "~" }
+    "!": { commit: "！" }
+    "@": { commit: "@" }
+    "#": { commit: "#" }
+    "$": { commit: "￥" }
+    "%": { commit: "%" }
+    "^": { commit: "……" }
+    "&": { commit: "&" }
+    "*": { commit: "*" }
+    "(": { commit: "（" }
+    ")": { commit: "）" }
+    "-": { commit: "-" }
+    "_": { commit: "——" }
+    "=": { commit: "=" }
+    "+": { commit: "+" }
+    "\\": { commit: "、" }
+    "|": { commit: "|" }
+    "[": { commit: "【" }
+    "]": { commit: "】" }
+    "{": { commit: "「" }
+    "}": { commit: "」" }
+    ";": { commit: "；" }
+    ":": { commit: "：" }
+    "'": { pair: ["‘", "’"] }
+    "\"": { pair: ["“", "”"] }
+    ",": { commit: "，" }
+    ".": { commit: "。" }
+    "<": { commit: "《" }
+    ">": { commit: "》" }
+    "/": { commit: "/" }
+    "?": { commit: "？" }
+  # 全角：同上，[]{}<> 用【】「」《》而不是全角 ASCII 括号
+  full_shape:
+    "`": { commit: "·" }
+    "~": { commit: "～" }
+    "!": { commit: "！" }
+    "@": { commit: "＠" }
+    "#": { commit: "＃" }
+    "$": { commit: "￥" }
+    "%": { commit: "％" }
+    "^": { commit: "……" }
+    "&": { commit: "＆" }
+    "*": { commit: "＊" }
+    "(": { commit: "（" }
+    ")": { commit: "）" }
+    "-": { commit: "－" }
+    "_": { commit: "——" }
+    "=": { commit: "＝" }
+    "+": { commit: "＋" }
+    "\\": { commit: "、" }
+    "|": { commit: "｜" }
+    "[": { commit: "【" }
+    "]": { commit: "】" }
+    "{": { commit: "「" }
+    "}": { commit: "」" }
+    ";": { commit: "；" }
+    ":": { commit: "：" }
+    "'": { pair: ["‘", "’"] }
+    "\"": { pair: ["“", "”"] }
+    ",": { commit: "，" }
+    ".": { commit: "。" }
+    "<": { commit: "《" }
+    ">": { commit: "》" }
+    "/": { commit: "／" }
+    "?": { commit: "？" }
+
+ascii_composer:
+  good_old_caps_lock: true
+  switch_key:
+    Shift_L: noop
+    Shift_R: noop
+    Control_L: noop
+    Control_R: noop
+    Caps_Lock: clear
+    Eisu_toggle: clear

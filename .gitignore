@@ -1,0 +1,19 @@
+.DS_Store
+.cursor/
+__pycache__/
+*.pyc
+
+# Local-only research, evidence, design notes, and tools. Stay on disk.
+/private/
+/docs/
+/STATUS.md
+/scripts/
+
+# Generated Rime artifacts and dictionaries
+/build/
+/rime/*.dict.yaml
+/rime/tests/
+*.userdb/
+*.userdb.kct.snapshot/
+installation.yaml
+user.yaml

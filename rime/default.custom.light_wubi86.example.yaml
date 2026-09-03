@@ -1,0 +1,14 @@
+# Rime default custom patch example for enabling lightWubi86.
+#
+# Do not copy this file over an existing default.custom.yaml blindly.
+# Merge the schema entry into your own Rime user configuration, then redeploy.
+#
+# Intended switcher menu: official 五笔字型 only.
+# Do not add light_wubi86_pinyin; it is only a pinyin reverse-lookup dependency.
+# Do not keep archived Haifeng wubi86 or retired light_wubi86_advanced on the menu.
+# Behavior switches stay in the official schema without live `states`;
+# uncomment the `# states:` lines in light_wubi86.schema.yaml when testing.
+
+patch:
+  schema_list:
+    - schema: light_wubi86
