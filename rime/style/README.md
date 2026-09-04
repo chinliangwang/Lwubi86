@@ -21,10 +21,10 @@
 | 官方：`corner_radius 7`、`hilited_corner_radius 0` | ✅ | native 默认圆角策略 |
 | 官方：`shadow_size 0`、`mutual_exclusive false` | ✅ | 不做额外阴影；语义色自然混合 |
 | Squirrel 1.x：`candidate_format`、`inline_preedit` | ✅ | 新格式 + 行内预编辑 |
-| 横排 `linear` | ✅ | 更接近现代 macOS 拼音候选栏（官方默认是 stacked） |
+| 候选排列 | ✅ 官方默认 | `stacked` 竖排；未覆盖 `candidate_list_layout` |
 | `translucency` + flat-light/dark（LEO #589） | ❌ 暂不 | 与 native 语义色是两条路线；先试 pure native |
 | `display_p3` 自定义色板 | ❌ 不适用 | native 不用 preset hex |
-| SF Pro 序号字体 | ❌ 暂不 | native 用系统等宽数字标签；中文仍 PingFang SC |
+| 字体 | ✅ 官方默认 | `Avenir` 16pt；不单独缩小序号/注释（官方注释项保持未设置） |
 
 ## 试用与切换
 

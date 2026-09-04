@@ -7,11 +7,17 @@
 # - LEO Yoon-Tsaw: #449, #934, squirrel.yaml 配置指南
 # - Official defaults: github.com/rime/squirrel/blob/master/data/squirrel.yaml
 # - Restore Dracula: rime/style/dracula.squirrel.custom.yaml.example
+#
+# Terminal.app / iTerm2 default to no_inline, which draws preedit inside the
+# candidate panel. Force inline so those apps match Notes/Safari.
 
 patch:
+  "app_options/com.apple.Terminal/no_inline": false
+  "app_options/com.apple.Terminal/inline": true
+  "app_options/com.googlecode.iterm2/no_inline": false
+  "app_options/com.googlecode.iterm2/inline": true
   "style/color_scheme": native
   "style/color_scheme_dark": native
-  "style/candidate_list_layout": linear
   "style/text_orientation": horizontal
   "style/inline_preedit": true
   "style/candidate_format": "[label]. [candidate] [comment]"
@@ -26,7 +32,3 @@ patch:
   "style/mutual_exclusive": false
   "style/translucency": false
   "style/status_message_type": mix
-  "style/font_face": "PingFang SC"
-  "style/font_point": 16
-  "style/label_font_point": 12
-  "style/comment_font_point": 12
