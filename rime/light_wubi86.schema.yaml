@@ -130,6 +130,14 @@ pinyin_aux:
   prefix: z
   suffix: "'"
   tips: "〔拼音〕"
+  # table_translator defaults these on; otherwise z+pinyin glues
+  # unmatched syllables into a sentence candidate whose comment is ☯.
+  enable_charset_filter: false
+  enable_completion: true
+  enable_encoder: false
+  enable_sentence: false
+  enable_user_dict: false
+  encode_commit_history: false
 
 traditionalize:
   option_name: simplification
